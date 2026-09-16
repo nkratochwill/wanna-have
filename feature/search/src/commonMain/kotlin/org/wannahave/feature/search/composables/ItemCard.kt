@@ -39,7 +39,7 @@ fun ItemCard(item: Item) {
             Column {
                 Image(
                     painter = rememberAsyncImagePainter(item.imageUrl),
-                    contentDescription = item.title,
+                    contentDescription = null,
                     modifier = Modifier.height(124.dp)
                         .clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)),
                     contentScale = ContentScale.Crop
