@@ -1,33 +1,58 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Server.
+# Wanna Have
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+A classifieds app in Kotlin and Compose Multiplatform, built as a showcase for
+[willhaben](https://www.willhaben.at). The name is a straight translation
+(*will haben* → *wanna have*). Had I really pursued it, it would be the better app.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+> Personal side project, not affiliated with willhaben.
 
-* `/server` is for the Ktor server application.
+## What’s in it
 
-* `/shared` is for the code that will be shared between all targets in the project.
-  The most important subfolder is `commonMain`. If preferred, you can add code to the platform-specific folders here too.
+- **One codebase, four platforms:** Android, iOS, desktop and the web (Kotlin/Wasm) share one
+  Compose Multiplatform UI.
+- **Adaptive navigation:** a bottom bar on phones and a navigation rail on wide screens
+  (window-size classes), on a shared NavHost where every feature brings its own routes.
+- **Search:** a custom Material 3 search bar that expands, collapses and toggles mic and clear
+  icons as you type, plus browsable carousels with item cards (Coil 3 image loading over Ktor).
+- **Sell:** a create-listing form (“Whatcha wanna sell?”) with photo, title, description and
+  save-as-draft.
+- **Profile:** an account screen with settings sections.
+- **Design system:** light and dark Material 3 color schemes that follow the OS, edge-to-edge
+  on Android, Tab/Shift+Tab focus handling on desktop.
 
+## Status
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+Early prototype: the UI runs on sample data, listings aren’t saved yet and there is no backend
+(the `server` module is a Ktor stub).
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+## Modules
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+```
+composeApp          app entry points (Android, iOS, desktop, web)
+core/designsystem   theme, navigation bar/rail, shared components
+core/model          data models
+feature/search      browse and search
+feature/sell        create a listing
+feature/profile     account
+shared              platform abstractions
+server              Ktor server (stub)
+iosApp              Xcode project, iOS entry point
+```
 
-KMP-NativeCoroutines
-SKIE
-KMPBridge
-CrashKIOS
-Sqldelight
-https://flutterweb-wasm.web.app
+## Run it
+
+| Platform | Command |
+|---|---|
+| Android | `./gradlew :composeApp:installDebug` |
+| Desktop | `./gradlew :composeApp:run` |
+| Web | `./gradlew :composeApp:wasmJsBrowserDevelopmentRun` |
+| iOS | open `iosApp/iosApp.xcodeproj` in Xcode and run |
+
+## Stack
+
+Kotlin 2.2 · Compose Multiplatform 1.9 · Material 3 · Navigation Compose · Ktor 3.3 · Coil 3 ·
+kotlinx-datetime
+
+## On the radar
+
+SQLDelight, SKIE, KMP-NativeCoroutines, KMPBridge, CrashKIOS
